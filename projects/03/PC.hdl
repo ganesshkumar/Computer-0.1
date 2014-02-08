@@ -1,0 +1,35 @@
+/**
+ * A 16-bit counter with load and reset control bits.
+ * if      (reset[t]==1) out[t+1] = 0
+ * else if (load[t]==1)  out[t+1] = in[t]
+ * else if (inc[t]==1)   out[t+1] = out[t] + 1  (integer addition)
+ * else                  out[t+1] = out[t]
+ */
+
+CHIP PC {
+    IN in[16],load,inc,reset;
+    OUT out[16];
+
+    PARTS:
+    // Using reset, load and inc form the control for the Mux
+    //             M|   |L
+    //             -------
+    //       0 ----|     |
+    //      in ----|     |--- inDFF
+    // out + 1 ----| Mux |
+    //     out ----|     |
+    //             -------
+    //  M=!(r+l)    L=!r(l+!i)
+
+    Or(a=reset, b=load, out=mtmp);
+    Not(in=mtmp, out=m);
+
+    Not(in=reset, out=nreset);
+    Not(in=inc, out=ninc);
+    Or(a=load, b=ninc, out=ltmp);
+    And(a=nreset, b=ltmp, out=l);
+
+    Inc16(in=prev, out=incprev);
+    Mux4Way16(a[0..15]=false, b=in, c=incprev, d=prev, sel[1]=m, sel[0]=l, out=inPC);
+    Register(in=inPC, load=true, out=out, out=prev);
+}
