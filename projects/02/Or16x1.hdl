@@ -1,0 +1,24 @@
+CHIP Or16x1 {
+    IN in[16];
+    OUT out;
+
+    PARTS:
+    Or(a=in[0], b=in[1], out=t1);
+    Or(a=in[2], b=in[3], out=t2);
+    Or(a=in[4], b=in[4], out=t3);
+    Or(a=in[6], b=in[7], out=t4);
+    Or(a=in[8], b=in[9], out=t5);
+    Or(a=in[10], b=in[11], out=t6);
+    Or(a=in[12], b=in[13], out=t7);
+    Or(a=in[14], b=in[15], out=t8);
+
+    Or(a=t1, b=t2, out=s1);
+    Or(a=t3, b=t4, out=s2);
+    Or(a=t5, b=t6, out=s3);
+    Or(a=t7, b=t8, out=s4);
+
+    Or(a=s1, b=s2, out=r1);
+    Or(a=s3, b=s4, out=r2);
+
+    Or(a=r1, b=r2, out=out);
+}
