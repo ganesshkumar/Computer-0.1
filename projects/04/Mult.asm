@@ -15,22 +15,26 @@ D=A
 @R2
 M=D
 
-//Read R0 to D
+// Read R0 to D
 @R0
 D=M
 
+// If R0 is zero go to infinite loop
 @END
 D; JLE
 
 (LOOP)
+// Read sum
 @R2
 D=M
 
+// Add R1 to sum
 @R1
 D=D+M
 @R2
 M=D
 
+// Decrement R0
 @R0
 M=M-1
 D=M
