@@ -1,48 +1,50 @@
 #! /usr/bin/python
 
 class Coder:
-    def __init__(self, input_filename, output_filename):
-        self.input_file = input_filename
+    def __init__(self, output_filename):
+        self.input_file = ''
         self.output_file = open(output_filename, 'w+')
         self.has_comparision = False
         self.condition_suffix = 1
 
     def set_filename(self, filename):
-        if self.output_file is not None:
-            self.output_file.flush()
-            self.output_file.close()
-        self.output_file = open(filename, 'w+')
+        filename = filename.split('.')[0]
+        if len(filename.split('/')) > 0: # Linux and Mac
+            filename = filename.split('/')[len(filename.split('/'))-1]
+        if len(filename.split('\\')) > 0: # Windows
+            filename = filename.split('\\')[len(filename.split('\\'))-1]
+        self.input_file = filename
 
     def write_arithmetic(self, command):
         if command == 'ADD' or command == 'SUB' or command == 'AND' or command == 'OR':
             self.pop()
-            print '@SP'
-            print 'AM=M-1'
-            print 'D=D+M' if command == 'ADD' else 'D=M-D' if command == 'SUB' else 'D=D&M' if command == 'AND' else 'D=D|M'
+            self.output_file.write('@SP' + '\n')
+            self.output_file.write('AM=M-1' + '\n')
+            self.output_file.write('D=D+M\n' if command == 'ADD' else 'D=M-D\n' if command == 'SUB' else 'D=D&M\n' if command == 'AND' else 'D=D|M\n')
             self.push()
         elif command == 'NEG':
-            print '@SP'
-            print 'A=M-1'
-            print 'M=-M'
+            self.output_file.write('@SP' + '\n')
+            self.output_file.write('A=M-1' + '\n')
+            self.output_file.write('M=-M' + '\n')
         elif command == 'EQ' or command == 'LT' or command == 'GT':
             suffix = str(self.condition_suffix)
             self.condition_suffix += 1
             self.write_arithmetic('SUB')
-            print '@startC' + suffix
-            print 'D;JEQ' if command == 'EQ' else 'D;JLT' if command == 'LT' else 'D;JGT'
+            self.output_file.write('@startC' + suffix + '\n')
+            self.output_file.write('D;JEQ\n' if command == 'EQ' else 'D;JLT\n' if command == 'LT' else 'D;JGT\n')
             self.pop()
-            print 'D=0'
+            self.output_file.write('D=0' + '\n')
             self.push()
-            print '@endC' + suffix
-            print '0;JMP'
-            print '(startC' + suffix + ')'
+            self.output_file.write('@endC' + suffix + '\n')
+            self.output_file.write('0;JMP' + '\n')
+            self.output_file.write('(startC' + suffix + ')' + '\n')
             self.pop()
-            print 'D=-1'
+            self.output_file.write('D=-1' + '\n')
             self.push()
-            print '(endC' + suffix + ')'
+            self.output_file.write('(endC' + suffix + ')' + '\n')
         elif command == 'NOT':
             self.pop()
-            print 'D=!D'
+            self.output_file.write('D=!D' + '\n')
             self.push()
 
 
@@ -56,28 +58,28 @@ class Coder:
 
     def push(self):
         ''' Puts the value in D register to stack'''
-        print '@SP'
-        print 'A=M'
-        print 'M=D'
-        print '@SP'
-        print 'M=M+1'
+        self.output_file.write('@SP' + '\n')
+        self.output_file.write('A=M' + '\n')
+        self.output_file.write('M=D' + '\n')
+        self.output_file.write('@SP' + '\n')
+        self.output_file.write('M=M+1' + '\n')
 
     def pop(self):
         ''' Gets the value in stack to  D register'''
-        print '@SP'
-        print 'AM=M-1'
-        print 'D=M'
+        self.output_file.write('@SP' + '\n')
+        self.output_file.write('AM=M-1' + '\n')
+        self.output_file.write('D=M' + '\n')
 
 
     def get_from_memory(self, segment, index):
         ''' Gets the value to D register'''
         if segment == 'constant':
-            print '@' + str(index)
-            print 'D=A'
+            self.output_file.write('@' + str(index) + '\n')
+            self.output_file.write('D=A' + '\n')
         else:
             self.calculate_address(segment, index)
-            print 'A=D'
-            print 'D=M'
+            self.output_file.write('A=D' + '\n')
+            self.output_file.write('D=M' + '\n')
 
     def put_to_memory(self, segment, index):
         ''' Puts the value in D register to the memory'''
@@ -85,51 +87,51 @@ class Coder:
         if segment == 'constant':
             pass
         else:
-            print '@internal1'
-            print 'M=D'
+            self.output_file.write('@internal1' + '\n')
+            self.output_file.write('M=D' + '\n')
             self.calculate_address(segment, index)
-            print '@internal2'
-            print 'M=D'
-            print '@internal1'
-            print 'D=M'
-            print '@internal2'
-            print 'A=M'
-            print 'M=D'
+            self.output_file.write('@internal2' + '\n')
+            self.output_file.write('M=D' + '\n')
+            self.output_file.write('@internal1' + '\n')
+            self.output_file.write('D=M' + '\n')
+            self.output_file.write('@internal2' + '\n')
+            self.output_file.write('A=M' + '\n')
+            self.output_file.write('M=D' + '\n')
 
     def calculate_address(self, segment, index):
         ''' Calculates the effective address using segment and index and puts in D'''
         if segment == 'local':
-            print '@LCL'
-            print 'D=M'
-            print '@' + str(index)
-            print 'D=D+A'
+            self.output_file.write('@LCL' + '\n')
+            self.output_file.write('D=M' + '\n')
+            self.output_file.write('@' + str(index) + '\n')
+            self.output_file.write('D=D+A' + '\n')
         elif segment == 'argument':
-            print '@ARG'
-            print 'D=M'
-            print '@' + str(index)
-            print 'D=D+A'
+            self.output_file.write('@ARG' + '\n')
+            self.output_file.write('D=M' + '\n')
+            self.output_file.write('@' + str(index) + '\n')
+            self.output_file.write('D=D+A' + '\n')
         elif segment ==  'this':
-            print '@THIS'
-            print 'D=M'
-            print '@' + str(index)
-            print 'D=D+A'
+            self.output_file.write('@THIS' + '\n')
+            self.output_file.write('D=M' + '\n')
+            self.output_file.write('@' + str(index) + '\n')
+            self.output_file.write('D=D+A' + '\n')
         elif segment == 'that':
-            print '@THAT'
-            print 'D=M'
-            print '@' + str(index)
-            print 'D=D+A'
+            self.output_file.write('@THAT' + '\n')
+            self.output_file.write('D=M' + '\n')
+            self.output_file.write('@' + str(index) + '\n')
+            self.output_file.write('D=D+A' + '\n')
         elif segment == 'pointer':
-            print '@3'
-            print 'D=A'
-            print '@' + str(index)
-            print 'D=D+A'
+            self.output_file.write('@3' + '\n')
+            self.output_file.write('D=A' + '\n')
+            self.output_file.write('@' + str(index) + '\n')
+            self.output_file.write('D=D+A' + '\n')
         elif segment == 'temp':
-            print '@5'
-            print 'D=A'
-            print '@' + str(index)
-            print 'D=D+A'
+            self.output_file.write('@5' + '\n')
+            self.output_file.write('D=A' + '\n')
+            self.output_file.write('@' + str(index) + '\n')
+            self.output_file.write('D=D+A' + '\n')
         elif segment == 'static':
-            print '@' + self.input_file + '.' + str(index)
-            print 'D=A'
+            self.output_file.write('@' + self.input_file + '.' + str(index) + '\n')
+            self.output_file.write('D=A' + '\n')
 
 
