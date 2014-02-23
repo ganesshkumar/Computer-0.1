@@ -20,7 +20,7 @@ class Parser:
         self.current_command = self.current_command.strip()
         if self.current_command.find('//') >= 0:
             self.current_command = self.current_command[0:self.current_command.find('//')]
-	if self.current_command[:2] == '//' or self.current_command == '':
+        if self.current_command[:2] == '//' or self.current_command == '':
             self.advance()
 
     def command_type(self):
