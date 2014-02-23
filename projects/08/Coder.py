@@ -40,7 +40,7 @@ class Coder:
         self.output_file.write('D;JNE' + '\n')
 
     def write_call(self, function_name, n_args):
-        self.output_file.write('@RETURN.' + self.input_file + '.' + self.current_function + '.' + str(self.function_suffix) + '\n')
+        self.output_file.write('@RETURN.' + self.current_function + '.' + str(self.function_suffix) + '\n')
         self.output_file.write('D=A' + '\n')
         self.push()
         self.output_file.write('@LCL' + '\n')
@@ -70,7 +70,7 @@ class Coder:
         #self.write_goto(self.input_file + '.' + function_name)
         self.output_file.write('@' + function_name + '\n')
         self.output_file.write('0;JMP' + '\n')
-        self.output_file.write('(RETURN.' + self.input_file + '.' + self.current_function + '.' + str(self.function_suffix) + ')' + '\n')
+        self.output_file.write('(RETURN.' + self.current_function + '.' + str(self.function_suffix) + ')' + '\n')
         self.function_suffix += 1
 
     def write_return(self):
@@ -126,24 +126,24 @@ class Coder:
 
     def write_function(self, function_name, n_vars):
         self.current_function = function_name
-        self.output_file.write('(' + self.input_file + '.' + function_name + ')' + '\n')
+        self.output_file.write('(' + function_name + ')' + '\n')
         self.output_file.write('@' + str(n_vars) + '\n')
         self.output_file.write('D=A' + '\n')
         self.output_file.write('@R13' + '\n')
         self.output_file.write('M=D' + '\n')
 
-        self.output_file.write('(' + self.input_file + '.' + self.current_function + '.init.start)' + '\n')
+        self.output_file.write('(' + self.current_function + '.init.start)' + '\n')
         self.output_file.write('@R13' + '\n')
         self.output_file.write('D=M' + '\n')
-        self.output_file.write('@' + self.input_file + '.' + self.current_function + '.init.end' + '\n')
+        self.output_file.write('@' + self.current_function + '.init.end' + '\n')
         self.output_file.write('D; JEQ' + '\n')
         self.output_file.write('D=0' + '\n')
         self.push()
         self.output_file.write('@R13' + '\n')
         self.output_file.write('M=M-1' + '\n')
-        self.output_file.write('@' + self.input_file + '.' + self.current_function + '.init.start' + '\n')
+        self.output_file.write('@' + self.current_function + '.init.start' + '\n')
         self.output_file.write('0;JMP' + '\n')
-        self.output_file.write('(' + self.input_file + '.' + self.current_function + '.init.end)' + '\n')
+        self.output_file.write('(' + self.current_function + '.init.end)' + '\n')
 
 
     def write_arithmetic(self, command):
@@ -264,3 +264,5 @@ class Coder:
         elif segment == 'static':
             self.output_file.write('@' + self.input_file + '.' + str(index) + '\n')
             self.output_file.write('D=A' + '\n')
+
+
