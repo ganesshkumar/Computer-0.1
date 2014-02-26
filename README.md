@@ -4,7 +4,7 @@ Computer-0.1
 Following the course [The Nand2Tetris](http://www.nand2tetris.org/course.php), I am trying to build a computer from NAND gates and D flip-flop.
 
 Building the computer consists of two modules: 
- * Hhardware hierarchy
+ * Hardware hierarchy
  * Software hierarchy
  
 ### Hack
