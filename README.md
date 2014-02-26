@@ -18,7 +18,7 @@ Building the computer consists of two modules:
  * ~~Assembler~~
  * ~~VM I: Stack Arithmetic~~
  * ~~VM II: Program Control~~
- * High-Level Language
+ * ~~High-Level Language~~
  * Compiler I: Syntax Analysis
  * Compiler II: Code Generation
  * Operating System

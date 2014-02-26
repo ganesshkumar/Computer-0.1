@@ -1,0 +1,934 @@
+function ScoreBoard.new 0
+push constant 11
+call Memory.alloc 1
+pop pointer 0
+push constant 205
+pop this 0
+push constant 2
+pop this 1
+push constant 100
+pop this 2
+push constant 15
+pop this 3
+push constant 10
+pop this 6
+push constant 5
+pop this 7
+push constant 89
+pop this 9
+push pointer 0
+call ScoreBoard.drawBoard 1
+pop temp 0
+push constant 0
+pop this 9
+push pointer 0
+return
+function ScoreBoard.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function ScoreBoard.setScore 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 9
+push pointer 0
+call ScoreBoard.drawBoard 1
+pop temp 0
+push constant 0
+return
+function ScoreBoard.drawBoard 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push constant 1
+add
+push this 1
+push constant 1
+add
+push this 0
+push this 2
+add
+push constant 1
+sub
+push this 1
+push this 3
+add
+push constant 1
+sub
+call Screen.drawRectangle 4
+pop temp 0
+push constant 4
+pop this 10
+label WHILE_EXP0
+push this 10
+push constant 1
+neg
+gt
+not
+if-goto WHILE_END0
+push pointer 0
+push this 9
+push constant 10
+push this 9
+push constant 10
+call Math.divide 2
+call Math.multiply 2
+sub
+push this 10
+call ScoreBoard.drawNumber 3
+pop temp 0
+push this 9
+push constant 10
+call Math.divide 2
+pop this 9
+push this 10
+push constant 1
+sub
+pop this 10
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function ScoreBoard.erase 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function ScoreBoard.drawNumber 0
+push argument 0
+pop pointer 0
+push argument 2
+push constant 20
+call Math.multiply 2
+push constant 5
+add
+pop this 8
+push argument 1
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine1 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine2 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine3 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine4 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine5 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine6 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE0
+push argument 1
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine2 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine3 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE1
+push argument 1
+push constant 2
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine1 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine2 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine4 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine5 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine7 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE2
+push argument 1
+push constant 3
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine1 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine2 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine3 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine4 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine7 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE3
+push argument 1
+push constant 4
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine2 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine3 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine6 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine7 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE4
+push argument 1
+push constant 5
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine1 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine3 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine4 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine6 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine7 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE5
+push argument 1
+push constant 6
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine1 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine3 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine4 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine5 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine6 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine7 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE6
+push argument 1
+push constant 7
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine1 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine2 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine3 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE7
+push argument 1
+push constant 8
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine1 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine2 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine3 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine4 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine5 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine6 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine7 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE8
+push argument 1
+push constant 9
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine1 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine2 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine3 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine4 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine6 3
+pop temp 0
+push pointer 0
+push this 0
+push this 8
+add
+push constant 2
+add
+push this 1
+push constant 2
+add
+call ScoreBoard.drawLine7 3
+pop temp 0
+push constant 0
+return
+label IF_FALSE9
+push constant 0
+return
+function ScoreBoard.drawLine1 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push argument 2
+push argument 1
+push this 6
+add
+push argument 2
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function ScoreBoard.drawLine2 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push this 6
+add
+push argument 2
+push argument 1
+push this 6
+add
+push argument 2
+push this 7
+add
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function ScoreBoard.drawLine3 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push this 6
+add
+push argument 2
+push this 7
+add
+push constant 2
+add
+push argument 1
+push this 6
+add
+push argument 2
+push constant 2
+push this 7
+call Math.multiply 2
+add
+push constant 1
+add
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function ScoreBoard.drawLine4 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push argument 2
+push constant 2
+push this 7
+call Math.multiply 2
+add
+push constant 1
+add
+push argument 1
+push this 6
+add
+push argument 2
+push constant 2
+push this 7
+call Math.multiply 2
+add
+push constant 1
+add
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function ScoreBoard.drawLine5 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push argument 2
+push this 7
+add
+push constant 2
+add
+push argument 1
+push argument 2
+push constant 2
+push this 7
+call Math.multiply 2
+add
+push constant 1
+add
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function ScoreBoard.drawLine6 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push argument 2
+push argument 1
+push argument 2
+push this 7
+add
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function ScoreBoard.drawLine7 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push argument 2
+push this 7
+add
+push constant 1
+add
+push argument 1
+push this 6
+add
+push argument 2
+push this 7
+add
+push constant 1
+add
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return

@@ -1,0 +1,189 @@
+/** Program for Score Board
+  * Create an object
+  * Use the method setScore(int) to display a score
+  * Use the method erase() to clear the score board
+  */
+
+class ScoreBoard {
+
+    field int x, y;
+    field int len, wid;
+    field int xnOff, ynOff;
+    field int lW, lH;
+    field int offset;
+    field int number;
+    field int temp;
+
+    constructor ScoreBoard new() {
+        let x = 205;
+        let y = 2;
+        let len = 100;
+        let wid = 15;
+        let lW = 10;
+        let lH = 5;
+        let number = 89;
+
+        do drawBoard();
+        let number = 0;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void setScore(int n) {
+        let number = n;
+        do drawBoard();
+        return;
+    }
+
+    method void drawBoard() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + len, y + wid);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x+1, y+1, x + len -1, y + wid -1);
+
+        let temp = 4;
+        while(temp > -1) {
+            do drawNumber(number-(10*(number/10)), temp);
+            let number = number / 10;
+            let temp = temp - 1;
+        }
+        return;
+    }
+
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + len, y + wid);
+        return;
+    }
+
+    method void drawNumber(int num, int index) {
+        let offset = index * 20 + 5;
+        
+        if (num = 0) {
+            do drawLine1(x+offset+2, y+2);
+            do drawLine2(x+offset+2, y+2);
+            do drawLine3(x+offset+2, y+2);
+            do drawLine4(x+offset+2, y+2);
+            do drawLine5(x+offset+2, y+2);
+            do drawLine6(x+offset+2, y+2);
+            return;
+        }
+        if (num = 1) {
+            do drawLine2(x+offset+2, y+2);
+            do drawLine3(x+offset+2, y+2);
+            return;
+        }
+        if (num = 2) {
+            do drawLine1(x+offset+2, y+2);
+            do drawLine2(x+offset+2, y+2);
+            do drawLine4(x+offset+2, y+2);
+            do drawLine5(x+offset+2, y+2);
+            do drawLine7(x+offset+2, y+2);
+            return;
+        }
+        if (num = 3) {
+            do drawLine1(x+offset+2, y+2);
+            do drawLine2(x+offset+2, y+2);
+            do drawLine3(x+offset+2, y+2);
+            do drawLine4(x+offset+2, y+2);
+            do drawLine7(x+offset+2, y+2);
+            return;
+        }
+        if (num = 4) {
+            do drawLine2(x+offset+2, y+2);
+            do drawLine3(x+offset+2, y+2);
+            do drawLine6(x+offset+2, y+2);
+            do drawLine7(x+offset+2, y+2);
+            return;
+        }
+        if (num = 5) {
+            do drawLine1(x+offset+2, y+2);
+            do drawLine3(x+offset+2, y+2);
+            do drawLine4(x+offset+2, y+2);
+            do drawLine6(x+offset+2, y+2);
+            do drawLine7(x+offset+2, y+2);
+            return;
+        }
+        if (num = 6) {
+            do drawLine1(x+offset+2, y+2);
+            do drawLine3(x+offset+2, y+2);
+            do drawLine4(x+offset+2, y+2);
+            do drawLine5(x+offset+2, y+2);
+            do drawLine6(x+offset+2, y+2);
+            do drawLine7(x+offset+2, y+2);
+            return;
+        }
+        if (num = 7) {
+            do drawLine1(x+offset+2, y+2);
+            do drawLine2(x+offset+2, y+2);
+            do drawLine3(x+offset+2, y+2);
+            return;
+        }
+        if (num = 8) {
+            do drawLine1(x+offset+2, y+2);
+            do drawLine2(x+offset+2, y+2);
+            do drawLine3(x+offset+2, y+2);
+            do drawLine4(x+offset+2, y+2);
+            do drawLine5(x+offset+2, y+2);
+            do drawLine6(x+offset+2, y+2);
+            do drawLine7(x+offset+2, y+2);
+            return;
+        }
+        if (num = 9) {
+            do drawLine1(x+offset+2, y+2);
+            do drawLine2(x+offset+2, y+2);
+            do drawLine3(x+offset+2, y+2);
+            do drawLine4(x+offset+2, y+2);
+            do drawLine6(x+offset+2, y+2);
+            do drawLine7(x+offset+2, y+2);
+            return;
+        }
+        return;
+    }
+
+    method void drawLine1(int x, int y) {
+        do Screen.setColor(true);
+        do Screen.drawLine(x, y, x+lW, y);
+        return;
+    }
+
+    method void drawLine2(int x, int y) {
+        do Screen.setColor(true);
+        do Screen.drawLine(x+lW, y, x+lW, y+lH);
+        return;
+    }
+
+    method void drawLine3(int x, int y) {
+        do Screen.setColor(true);
+        do Screen.drawLine(x+lW, y+lH+2, x+lW, y+(2*lH)+1);
+        return;
+    }
+
+    method void drawLine4(int x, int y) {
+        do Screen.setColor(true);
+        do Screen.drawLine(x, y+(2*lH)+1, x+lW, y+(2*lH)+1);
+        return;
+    }
+
+    method void drawLine5(int x, int y) {
+        do Screen.setColor(true);
+        do Screen.drawLine(x, y+lH+2, x, y+(2*lH)+1);
+        return;
+    }
+
+    method void drawLine6(int x, int y) {
+        do Screen.setColor(true);
+        do Screen.drawLine(x, y, x, y+lH);
+        return;
+    }
+
+    method void drawLine7(int x, int y) {
+        do Screen.setColor(true);
+        do Screen.drawLine(x, y+lH+1, x+lW, y+lH+1);
+        return;
+    }
+}

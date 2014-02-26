@@ -1,0 +1,9 @@
+function Main.main 1
+call ScoreBoard.new 0
+pop local 0
+push local 0
+push constant 89
+call ScoreBoard.setScore 2
+pop temp 0
+push constant 0
+return

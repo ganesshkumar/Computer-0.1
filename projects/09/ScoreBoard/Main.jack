@@ -1,0 +1,11 @@
+class Main {
+
+    /** Initializes a new game and starts it. */
+    function void main() {
+        var ScoreBoard board;
+
+        let board = ScoreBoard.new();
+        do board.setScore(89);
+        return;
+    }
+}
